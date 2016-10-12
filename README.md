@@ -6,7 +6,7 @@ No identification is required to use this service.
 
 This service is not very young. Do not send too many requests at a time.
 
-[Met.no](http://met.no) is spending  hours in order to replace it by a robust service (METAPI). 
+[Met.no](http://met.no) is spending  hours in order to replace it by a robust service (METAPI).
 
 Nonetheless METAPI is still under development and can then be interrupted without any warning.
 
@@ -14,7 +14,7 @@ Nonetheless METAPI is still under development and can then be interrupted withou
 
 ```R
 # install.packages("devtools")
-devtools::install_github("nexmodeling/wsklimaR")
+devtools::install_github("nexModeling/wsklimaR")
 ```
 
 ## Example
@@ -30,4 +30,3 @@ values <- wsklimaR.getValues(timeserietypeID="2",
 ```
 
 The results is a data.frame easily convertible into a json file
-
