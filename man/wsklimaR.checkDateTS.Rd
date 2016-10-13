@@ -9,12 +9,23 @@ wsklimaR.checkDateTS(timeserie, timeserietypeID, fromPeriod, toPeriod,
 }
 \arguments{
 \item{timeserie}{a 2-column data.frame with time and the values}
+
+\item{timeserietypeID}{0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)}
+
+\item{fromPeriod}{string of character yyyymmdd}
+
+\item{toPeriod}{string of character yyyymmdd}
+
+\item{missingValues}{value of the expected mssing values.}
 }
 \description{
 In case of missing dates, the date timeserie will get filled-in, and a missing value will be added as a value of the element
 }
 \examples{
-wsklimaR.checkDateTS(timeserie,toPeriod,timeserietypeID)
+\dontrun{
+tmp <- wsklimaR.checkDateTS(timeserie, timeserietypeID, fromPeriod, toPeriod, missingValues)
+}
+
 }
 \keyword{wsklimaR}
 

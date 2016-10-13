@@ -4,12 +4,12 @@
 \alias{wsklimaR.getMetaElement}
 \title{Get the metadata of the meteorlogical element for a specific time resolution}
 \usage{
-wsklimaR.getMetaElement(timeserietypeID, station = NULL)
+wsklimaR.getMetaElement(timeserietypeID, stations = NULL)
 }
 \arguments{
 \item{timeserietypeID}{0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)}
 
-\item{elements}{TAM, RR, ..}
+\item{stations}{id of the stations. Can be a vector if multi-stations}
 }
 \description{
 wsklimaR.getMetaElement makes it possible to get the metadata of meteorological elements measured by met.no's stations
@@ -20,7 +20,7 @@ The output is a dataframe. This structure eases the conversion into json
 \examples{
 tmp <- wsklimaR.getMetaElement(timeserietypeID="2")
 str(tmp)
-tmp <- wsklimaR.getMetaElement(timeserietypeID="0",station=180)
+tmp <- wsklimaR.getMetaElement(timeserietypeID="0",stations=180)
 str(tmp)
 }
 \keyword{wsklimaR}

@@ -11,7 +11,15 @@ wsklimaR.getValues(timeserietypeID = NULL, fromPeriod = NULL,
 \arguments{
 \item{timeserietypeID}{0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)}
 
-\item{elements}{TAM, RR, ...}
+\item{fromPeriod}{string of character yyyymmdd}
+
+\item{toPeriod}{string of character yyyymmdd}
+
+\item{stations}{id of the stations. Can be a vector if multi-stations}
+
+\item{elements}{meteorlogical element as its code ("TAM", "RR", ...). Can be a vector if multi-element}
+
+\item{missingValues}{value of the expected mssing values. By default: -999}
 }
 \value{
 The output is a dataframe structured as followed: the date timeserie, and the elements. Each element is a dataframe made of the timeseries of the different stations.
@@ -22,9 +30,19 @@ wsklimaR.getValues makes it possible to get timeseries of meteorological element
 rem: timeserietypeID #2 is not always representing the hourly time resolution but also can be infra-hourly. We only kept hourly datasets.
 }
 \examples{
-df <- wsklimaR.getValues(timeserietypeID="1", fromPeriod="20130101",toPeriod="20130105",stations="180",elements=c("TAM","RR"),missingValues=-999)
+df <- wsklimaR.getValues(timeserietypeID="1",
+                         fromPeriod="20130101",
+                         toPeriod="20130105",
+                         stations="180",
+                         elements=c("TAM","RR"),
+                         missingValues=-999)
 str(df)
-df <- wsklimaR.getValues(timeserietypeID="2",fromPeriod="20120101",toPeriod="20151231",stations=c("19710","19720","2650","19480","18265","4870"),elements=c("TA"),missingValues=-999)
+df <- wsklimaR.getValues(timeserietypeID="2",
+                         fromPeriod="20120101",
+                         toPeriod="20151231",
+                         stations=c("19710","19720","2650","19480","18265","4870"),
+                         elements=c("TA"),
+                         missingValues=-999)
 str(df)
 }
 \keyword{wsklimaR}

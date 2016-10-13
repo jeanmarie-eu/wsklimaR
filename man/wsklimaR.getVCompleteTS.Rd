@@ -10,13 +10,26 @@ wsklimaR.getVCompleteTS(timeserietypeID, fromPeriod, toPeriod, stations,
 \arguments{
 \item{timeserietypeID}{0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)}
 
-\item{elements}{TAM, RR, ...}
+\item{fromPeriod}{string of character yyyymmdd}
+
+\item{toPeriod}{string of character yyyymmdd}
+
+\item{stations}{id of the stations.}
+
+\item{elements}{meteorlogical element as its code ("TAM", "RR", ...). Can be a vector if multi-element.}
+
+\item{missingValues}{value of the expected mssing values.}
 }
 \description{
 The timeserie is checked and filling-in by missing values in case of missing dates
 }
 \examples{
-wsklimaR.getVCompleteTS(timeserietypeID="1", fromPeriod="20130101",toPeriod="20130105",stations="180",elements="TAM",missingValues=-999)
+wsklimaR.getVCompleteTS(timeserietypeID="0",
+                        fromPeriod="20130101",
+                         toPeriod="20130105",
+                         stations="180",
+                         elements="TAM",
+                         missingValues=-999)
 }
 \keyword{wsklimaR}
 

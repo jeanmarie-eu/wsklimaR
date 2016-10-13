@@ -9,7 +9,7 @@ wsklimaR.getMetaStationbyElement(timeserietypeID, elements)
 \arguments{
 \item{timeserietypeID}{0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)}
 
-\item{elements}{TAM, RR, ..}
+\item{elements}{meteorlogical element as its code ("TAM", "RR", ...). Can be a vector if multi-element}
 }
 \description{
 wsklimaR.getMetaStationbyElement makes it possible to get the metadata of the met.no's stations that measure all the chosen meteorological elements.

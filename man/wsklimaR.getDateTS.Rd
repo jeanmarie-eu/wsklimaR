@@ -7,13 +7,20 @@
 wsklimaR.getDateTS(fromPeriod, toPeriod, timeserietypeID)
 }
 \arguments{
+\item{fromPeriod}{string of character yyyymmdd}
+
+\item{toPeriod}{string of character yyyymmdd}
+
 \item{timeserietypeID}{0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)}
 }
 \description{
 Get the full date timeserie between the range of the period and at the right time resolution
 }
 \examples{
-wsklimaR.getDateTS(fromPeriod,toPeriod,timeserietypeID)
+\dontrun{
+tmp <- wsklimaR.getDateTS(fromPeriod,toPeriod,timeserietypeID)
+}
+
 }
 \keyword{wsklimaR}
 

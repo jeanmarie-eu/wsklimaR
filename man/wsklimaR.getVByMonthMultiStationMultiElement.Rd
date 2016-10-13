@@ -10,13 +10,26 @@ wsklimaR.getVByMonthMultiStationMultiElement(timeserietypeID, fromPeriod,
 \arguments{
 \item{timeserietypeID}{0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)}
 
-\item{elements}{TAM, RR, ...}
+\item{fromPeriod}{string of character yyyymmdd}
+
+\item{toPeriod}{string of character yyyymmdd}
+
+\item{stations}{id of the stations. Can be a vector if multi-stations}
+
+\item{elements}{meteorlogical element as its code ("TAM", "RR", ...). Can be a vector if multi-element.}
+
+\item{missingValues}{value of the expected mssing values.}
 }
 \description{
 The wsklima server is not very young. It is better to split the request into several shorter in order to keep the server stable
 }
 \examples{
-wsklimaR.getVByMonthMultiStationMultiElement(timeserietypeID="0", fromPeriod="20130101",toPeriod="20130105",stations="180",elements="TAM",missingValues=-999)
+wsklimaR.getVByMonthMultiStationMultiElement(timeserietypeID="0",
+                                              fromPeriod="20130101",
+                                              toPeriod="20130105",
+                                              stations="180",
+                                              elements="TAM",
+                                              missingValues=-999)
 }
 \keyword{wsklimaR}
 

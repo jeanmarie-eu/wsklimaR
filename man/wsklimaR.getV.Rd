@@ -9,7 +9,13 @@ wsklimaR.getV(timeserietypeID, fromPeriod, toPeriod, stations, elements)
 \arguments{
 \item{timeserietypeID}{0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)}
 
-\item{elements}{TAM, RR, ..}
+\item{fromPeriod}{string of character yyyymmdd}
+
+\item{toPeriod}{string of character yyyymmdd}
+
+\item{stations}{id of the stations.}
+
+\item{elements}{meteorlogical element as its code ("TAM", "RR", ...). Can be a vector if multi-element}
 }
 \description{
 wsklimaR.getV makes it possible to get timeseries of a meteorlogical element at a given station registered by met.no for a specific period of time and a specific time resolution.
@@ -20,7 +26,11 @@ To check and fill-in missing dates, please use the function wsklimaR.checkDateTi
 It is highly recommended to use the function wsklimaR.getValues().
 }
 \examples{
-wsklimaR.getV(timeserietypeID="1", fromPeriod="20130101",toPeriod="20130105",stations="180",elements="TAM")
+tmp <- wsklimaR.getV(timeserietypeID="1",
+                     fromPeriod="20130101",
+                     toPeriod="20130105",
+                     stations="180",
+                     elements="TAM")
 }
 \keyword{wsklimaR}
 

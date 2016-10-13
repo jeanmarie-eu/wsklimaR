@@ -9,7 +9,7 @@ wsklimaR.getMetaSbyE(timeserietypeID, elements)
 \arguments{
 \item{timeserietypeID}{0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)}
 
-\item{elements}{TAM, RR, ..}
+\item{elements}{meteorlogical element as its code ("TAM", "RR", ...). Can be a vector if multi-element}
 }
 \description{
 wsklimaR.getMetaSbyE makes it possible to get the metadata of the stations from met.no given a meteorological element.
@@ -18,7 +18,7 @@ Indeed, instead of the logic operator AND, wsklima uses the logic operator OR
 It is highly recommended to use the function wsklimaR.getMetaStationbyElement().
 }
 \examples{
-wsklimaR.getMetaSbyE(timeserietypeID="1", fromPeriod="20130101",toPeriod="20130105",stations="180",elements="TAM")
+tmp <- wsklimaR.getMetaSbyE(timeserietypeID="0",elements="TAM")
 }
 \keyword{wsklimaR}
 
