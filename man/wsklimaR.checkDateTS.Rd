@@ -5,7 +5,7 @@
 \title{Check the data timeseries and fill-in by missing values}
 \usage{
 wsklimaR.checkDateTS(timeserie, timeserietypeID, fromPeriod, toPeriod,
-  missingValue)
+  missingValues)
 }
 \arguments{
 \item{timeserie}{a 2-column data.frame with time and the values}

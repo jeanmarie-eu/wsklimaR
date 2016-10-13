@@ -2,7 +2,7 @@
 % Please edit documentation in R/wsklimaR.getVByMonth.R
 \name{wsklimaR.getVByMonth}
 \alias{wsklimaR.getVByMonth}
-\title{Get the values of one elements at one station by month}
+\title{Get the values of one element at one station by month}
 \usage{
 wsklimaR.getVByMonth(timeserietypeID, fromPeriod, toPeriod, stations, elements)
 }

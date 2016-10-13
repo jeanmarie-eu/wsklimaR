@@ -13,16 +13,18 @@ wsklimaR.getValues(timeserietypeID = NULL, fromPeriod = NULL,
 
 \item{elements}{TAM, RR, ...}
 }
-\description{
-wsklimaR.getValues makes it possible to get timeseries of a meteorlogical elements at some given stations registered by met.no for a specific period of time and a specific time resolution.
-rem: timeserietypeID #2 is not always representing the hourly time resolution but also can be infra-hourly. We only kept hourly datasets.
+\value{
 The output is a dataframe structured as followed: the date timeserie, and the elements. Each element is a dataframe made of the timeseries of the different stations.
-This structure eases the conversion into json
+ This structure eases the conversion into a json format
+}
+\description{
+wsklimaR.getValues makes it possible to get timeseries of meteorological elements at some given stations registered by met.no for a specific period of time and a specific time resolution.
+rem: timeserietypeID #2 is not always representing the hourly time resolution but also can be infra-hourly. We only kept hourly datasets.
 }
 \examples{
-df <- wsklimaR.getValues(timeserietypeID="1", fromPeriod="20130101",toPeriod="20130105",stations="180",elements=c("TAM","RR"))
+df <- wsklimaR.getValues(timeserietypeID="1", fromPeriod="20130101",toPeriod="20130105",stations="180",elements=c("TAM","RR"),missingValues=-999)
 str(df)
-df <- wsklimaR.getValues(timeserietypeID="2",fromPeriod="20120101",toPeriod="20151231",stations=c("19710","19720","2650","19480","18265","4870"),elements=c("TA")
+df <- wsklimaR.getValues(timeserietypeID="2",fromPeriod="20120101",toPeriod="20151231",stations=c("19710","19720","2650","19480","18265","4870"),elements=c("TA"),missingValues=-999)
 str(df)
 }
 \keyword{wsklimaR}
