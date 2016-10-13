@@ -1,0 +1,9 @@
+daily1                              Get the daily temperature amd precipitation at station no 180 between 01/01/2013 and 05/01/2013
+daily2                              Get the daily temperature amd precipitation at station no 180 of the last three days
+hourly1                             Get the hourly temperature at stations no 19710 and 2650 between 27/12/2015 and 31/12/2015
+hourly2                             Get the hourly temperature and precipitation at stations no 19710 and 2650 between 27/12/2015 and 31/12/2015
+monthly                             Get the monthly temperature and precipitation at stations no 19710 and 180 between 16/03/2014 and 31/12/2015
+normalDaily                         Get the daily normal temperature at stations no 180, 2650
+normalMonthly                       Get the monthly normal precipitation at stations no 180
+metadataElementDailyValues          Get the metadata of the elements that have daily values
+metadataStationsHourlyTemperature   Get the metadata of the stations that measures or did measure hourly temperature                                  
