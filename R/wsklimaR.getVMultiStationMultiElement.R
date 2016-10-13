@@ -1,0 +1,40 @@
+#' Get the values of several element at several station
+#'
+#' @param timeserietypeID 0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)
+#' @param fromPeriod
+#' @param toPeriod
+#' @param stations
+#' @param elements TAM, RR, ...
+#' @keywords wsklimaR
+#' @export
+#' @examples
+#' wsklimaR.getVMultiStationMultiElement(timeserietypeID="4", fromPeriod="20130101",toPeriod="20130105",stations="180",elements="TAM",missingValues=-999)
+
+wsklimaR.getVMultiStationMultiElement <- function(timeserietypeID,fromPeriod,toPeriod,stations,elements,missingValues) {
+
+  dateTs <- wsklimaR.getDateTS(fromPeriod=fromPeriod,toPeriod=toPeriod,timeserietypeID=timeserietypeID)
+
+  output <- data.frame(date = dateTs)
+  for ( i in 1:length(elements)) {
+
+    tmp <- wsklimaR.getVCompleteTS(timeserietypeID=timeserietypeID,fromPeriod=fromPeriod,toPeriod=toPeriod,stations=stations[1],elements=elements[i],missingValues=missingValues)
+    tmp[which(tmp[,2]==-99999),2] <- missingValues
+
+    # if several stations
+    df <- tmp
+    if (length(stations)>1) {
+       for ( j in 2:length(stations)) {
+          tmp <- wsklimaR.getVCompleteTS(timeserietypeID=timeserietypeID,fromPeriod=fromPeriod,toPeriod=toPeriod,stations=stations[j],elements=elements[i],missingValues=missingValues)
+          tmp[which(tmp[,2]==-99999),2] <- missingValues
+          df <- cbind(df,tmp[,2])
+       }
+    }
+    df <- df[,-1]
+
+    output$element <- data.frame(element=rep(NA,length(dateTs)))
+    output$element <- data.frame(df)
+    colnames(output$element) <- (stations)
+    colnames(output) <- c("date",elements[1:i])
+  }
+	return(output)
+}

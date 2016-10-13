@@ -1,4 +1,4 @@
-#' Get the values of one elements at one station by month
+#' Get the values of one element at one station by month
 #'
 #' The wsklima server is not very young. It is better to split the request into several shorter in order to keep the server stable
 #' @param timeserietypeID 0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)

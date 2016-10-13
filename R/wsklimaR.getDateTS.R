@@ -35,8 +35,8 @@ wsklimaR.getDateTS <- function (fromPeriod,toPeriod,timeserietypeID){
 
    } else if ((timeserietypeID=="3"))  {
      # Normal Monthly: 1961-1990
-     rangeDate <- range(((strptime(paste("1961","01","01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste("1961","12","31",sep=""),"%Y%m%d",tz="GMT"))))
-     dateTs <- zoo(,(as.Date(seq(from =rangeDate[1], to =rangeDate[2], by = "month"))+1))
+     rangeDate <- range(((strptime(paste("1961","01","01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste("1961","12","01",sep=""),"%Y%m%d",tz="GMT"))))
+     dateTs <- zoo(,(as.Date(seq(from =rangeDate[1], to =rangeDate[2], by = "month"))))
 
    } else if ((timeserietypeID=="4"))  {
      # Normal Daily:1961-1990
@@ -44,7 +44,7 @@ wsklimaR.getDateTS <- function (fromPeriod,toPeriod,timeserietypeID){
      ts.date<-strptime(paste(ts$day,ts$month,ts$year,sep="."),"%d.%m.%Y",tz="GMT")
      ts2<-zoo(ts[,5:dim(ts)[2]], as.Date(ts.date))
      rangeDate <- range(((strptime(paste("1961","01","01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste("1961","12","31",sep=""),"%Y%m%d",tz="GMT"))))
-     dateTs <- zoo(,(as.Date(seq(from =rangeDate[1], to =rangeDate[2], by = "day"))+1))
+     dateTs <- zoo(,(as.Date(seq(from =rangeDate[1], to =rangeDate[2], by = "day"))))
    }
    res <- attributes(dateTs)$index
    return(res)
