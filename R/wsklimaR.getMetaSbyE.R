@@ -5,40 +5,40 @@
 #' Indeed, instead of the logic operator AND, wsklima uses the logic operator OR
 #' It is highly recommended to use the function wsklimaR.getMetaStationbyElement().
 #' @param timeserietypeID 0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)
-#' @param elements TAM, RR, ..
+#' @param elements meteorlogical element as its code ("TAM", "RR", ...). Can be a vector if multi-element
 #' @keywords wsklimaR
 #' @export
 #' @examples
-#' wsklimaR.getMetaSbyE(timeserietypeID="1", fromPeriod="20130101",toPeriod="20130105",stations="180",elements="TAM")
+#' tmp <- wsklimaR.getMetaSbyE(timeserietypeID="0",elements="TAM")
 
 wsklimaR.getMetaSbyE <- function(timeserietypeID, elements){
 
    wsklimaURL <- wsklimaR.getMetaSbyEsetUrl(timeserietypeID,elements)
 
    xml_data <- NULL
-   try(xml_data <-xmlTreeParse(wsklimaURL, useInternal = T,encoding = "UTF-8"))
+   try(xml_data <-XML::xmlTreeParse(wsklimaURL, useInternal = T,encoding = "UTF-8"))
 
    df <- data.frame(
-       amsl = as.character(unlist(xpathApply(xml_data,"//amsl",xmlValue))),
-       department = as.character(unlist(xpathApply(xml_data,"//department",xmlValue))),
-       fromDay = as.character(unlist(xpathApply(xml_data,"//fromDay",xmlValue))),
-       fromMonth = as.character(unlist(xpathApply(xml_data,"//fromMonth",xmlValue))),
-       fromYear = as.character(unlist(xpathApply(xml_data,"//fromYear",xmlValue))),
-       latDec = as.character(unlist(xpathApply(xml_data,"//latDec",xmlValue))),
-       lonDec = as.character(unlist(xpathApply(xml_data,"//lonDec",xmlValue))),
-       municipalityNo = as.character(unlist(xpathApply(xml_data,"//municipalityNo",xmlValue))),
-       name = as.character(unlist(xpathApply(xml_data,"//name",xmlValue))),
-       stnr = as.character(unlist(xpathApply(xml_data,"//stnr",xmlValue))),
-       toDay = as.character(unlist(xpathApply(xml_data,"//toDay",xmlValue))),
-       toMonth = as.character(unlist(xpathApply(xml_data,"//toMonth",xmlValue))),
-       toYear = as.character(unlist(xpathApply(xml_data,"//toYear",xmlValue))),
-       utm_e = as.character(unlist(xpathApply(xml_data,"//utm_e",xmlValue))),
-       utm_n = as.character(unlist(xpathApply(xml_data,"//utm_n",xmlValue))),
-       utm_zone = as.character(unlist(xpathApply(xml_data,"//utm_zone",xmlValue))),
-       wmoNo = as.character(unlist(xpathApply(xml_data,"//wmoNo",xmlValue)))
+       amsl           = as.character(unlist(XML::xpathApply(xml_data,"//amsl",XML::xmlValue))),
+       department     = as.character(unlist(XML::xpathApply(xml_data,"//department",XML::xmlValue))),
+       fromDay        = as.character(unlist(XML::xpathApply(xml_data,"//fromDay",XML::xmlValue))),
+       fromMonth      = as.character(unlist(XML::xpathApply(xml_data,"//fromMonth",XML::xmlValue))),
+       fromYear       = as.character(unlist(XML::xpathApply(xml_data,"//fromYear",XML::xmlValue))),
+       latDec         = as.character(unlist(XML::xpathApply(xml_data,"//latDec",XML::xmlValue))),
+       lonDec         = as.character(unlist(XML::xpathApply(xml_data,"//lonDec",XML::xmlValue))),
+       municipalityNo = as.character(unlist(XML::xpathApply(xml_data,"//municipalityNo",XML::xmlValue))),
+       name           = as.character(unlist(XML::xpathApply(xml_data,"//name",XML::xmlValue))),
+       stnr           = as.character(unlist(XML::xpathApply(xml_data,"//stnr",XML::xmlValue))),
+       toDay          = as.character(unlist(XML::xpathApply(xml_data,"//toDay",XML::xmlValue))),
+       toMonth        = as.character(unlist(XML::xpathApply(xml_data,"//toMonth",XML::xmlValue))),
+       toYear         = as.character(unlist(XML::xpathApply(xml_data,"//toYear",XML::xmlValue))),
+       utm_e          = as.character(unlist(XML::xpathApply(xml_data,"//utm_e",XML::xmlValue))),
+       utm_n          = as.character(unlist(XML::xpathApply(xml_data,"//utm_n",XML::xmlValue))),
+       utm_zone       = as.character(unlist(XML::xpathApply(xml_data,"//utm_zone",XML::xmlValue))),
+       wmoNo          = as.character(unlist(XML::xpathApply(xml_data,"//wmoNo",XML::xmlValue)))
        )
 
-    if (length(as.character(unlist(xpathApply(xml_data,"//fault",xmlValue))))>0)  df <- NULL
+    if (length(as.character(unlist(XML::xpathApply(xml_data,"//fault",XML::xmlValue))))>0)  df <- NULL
 
   return(df)
 }

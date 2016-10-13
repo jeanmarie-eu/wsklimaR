@@ -2,14 +2,18 @@
 #'
 #' The wsklima server is not very young. It is better to split the request into several shorter in order to keep the server stable
 #' @param timeserietypeID 0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)
-#' @param fromPeriod
-#' @param toPeriod
-#' @param stations
-#' @param elements TAM, RR, ...
+#' @param fromPeriod string of character yyyymmdd
+#' @param toPeriod string of character yyyymmdd
+#' @param stations id of the stations. 
+#' @param elements meteorlogical element as its code ("TAM", "RR", ...). Can be a vector if multi-element.
 #' @keywords wsklimaR
 #' @export
 #' @examples
-#' wsklimaR.getVByMonth(timeserietypeID="1", fromPeriod="20130101",toPeriod="20130105",stations="180",elements="TAM")
+#' wsklimaR.getVByMonth(timeserietypeID="0",
+#'                      fromPeriod="20130101",
+#'                      toPeriod="20130105",
+#'                      stations="180",
+#'                      elements="TAM")
 
 wsklimaR.getVByMonth <- function(timeserietypeID,fromPeriod,toPeriod,stations,elements) {
 
@@ -21,17 +25,17 @@ wsklimaR.getVByMonth <- function(timeserietypeID,fromPeriod,toPeriod,stations,el
   toDay <- substring(toPeriod, 7, 8)
 
 	rangetime <- range(((strptime(fromPeriod,"%Y%m%d",tz="GMT"))),((strptime(toPeriod,"%Y%m%d",tz="GMT"))))
-	tmp <- zoo(,(as.Date(seq(from =rangetime[1], to =rangetime[2], by = "month"))+1))
+	tmp <- zoo::zoo(,(zoo::as.Date(seq(from =rangetime[1], to =rangetime[2], by = "month"))+1))
 	seqPeriod <- attributes(tmp)$index
 	nbMonth <- length(seqPeriod)
 
-	fperiod<-as.character(as.Date(as.yearmon(seqPeriod) ))
+	fperiod<-as.character(zoo::as.Date(zoo::as.yearmon(seqPeriod) ))
 	substr(fperiod[1], 9, 10) <- fromDay
 	fperiod<-gsub("-","",fperiod)
 
 
-	tmp <- as.Date(as.yearmon(seqPeriod))+35
-	tperiod <- as.character(as.Date(as.yearmon(tmp))-1)
+	tmp <- zoo::as.Date(zoo::as.yearmon(seqPeriod))+35
+	tperiod <- as.character(zoo::as.Date(zoo::as.yearmon(tmp))-1)
 	substr(tperiod[nbMonth], 9, 10) <- toDay
 	tperiod<-gsub("-","",tperiod)
 

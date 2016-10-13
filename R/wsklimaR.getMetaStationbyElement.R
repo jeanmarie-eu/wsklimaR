@@ -5,7 +5,7 @@
 #' The output is a dataframe. This structure eases the conversion into json
 
 #' @param timeserietypeID 0:Daily, 1:Monthly, 2:Observations-hourly based, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)
-#' @param elements TAM, RR, ..
+#' @param elements meteorlogical element as its code ("TAM", "RR", ...). Can be a vector if multi-element
 #' @keywords wsklimaR
 #' @export
 #' @examples

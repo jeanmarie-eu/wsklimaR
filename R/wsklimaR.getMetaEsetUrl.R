@@ -1,6 +1,6 @@
-getMetaEsetUrl <- function(timeserietypeID,station=NULL) {
+getMetaEsetUrl <- function(timeserietypeID,stations=NULL) {
 
-   if (!is.null(station)) {
+   if (!is.null(stations)) {
 
       wsklimaURL <- "http://eklima.met.no/met/MetService?invoke=getElementsFromTimeserieTypeStation"
 
@@ -14,7 +14,7 @@ getMetaEsetUrl <- function(timeserietypeID,station=NULL) {
       } else stop("'timeserietypeID' is not correctly specified.\n")
 
       #station
-      wsklimaURL <- paste(wsklimaURL, "&stnr=", as.integer(station), sep = "")
+      wsklimaURL <- paste(wsklimaURL, "&stnr=", as.integer(stations), sep = "")
 
    } else {
 
