@@ -1,10 +1,14 @@
 # wsklimaR
 
-wsklimaR is designed to get an easy access to the stations from the Klimadata webservice at met.no [wsklima](http://eklima.met.no/wsKlima/start/start_en.html).
+wsklimaR is designed to get an easy access to stations registered by the Norwegian Meteorological Institute.
+
+The package connects you to the Klimadata webservice from met.no [wsklima](http://eklima.met.no/wsKlima/start/start_en.html).
 
 No identification is required to use this service.
 
-This service is not very young. Do not send too many requests at a time.
+This service is not so young. Do not send too many requests at a time.
+
+The output of each request is structured as a data.frame. It is easily usable as a matrix and easily convertible into a json file
 
 ## Installation
 
@@ -13,16 +17,14 @@ This service is not very young. Do not send too many requests at a time.
 devtools::install_github("nexModeling/wsklimaR")
 ```
 
-## Example
+## Usage
 
-Get the hourly temperature at stations no 19710, 19720, 2650, 19480, 18265, 4870 between 27/12/2015 and 31/12/2015
+Get hourly temperature and precipitation at stations # 19710 and # 2650 between 27/12/2015 and 31/12/2015
 
 ```R
-values <- wsklimaR.getValues(timeserietypeID="2",
-                             fromPeriod="20151227",
-                             toPeriod="20151231",
-                             stations=c("19710","19720","2650","19480","18265","4870"),
-                             elements=c("TA","RR_1"))
+values <- wsklimaR::getValues(timeserietypeID="2",
+                              fromPeriod="20151227",
+                              toPeriod="20151231",
+                              stations=c("19710","2650"),
+                              elements=c("TA","RR_1"))
 ```
-
-The results is a data.frame easily convertible into a json file
