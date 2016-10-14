@@ -1,5 +1,7 @@
 # wsklimaR
 
+[![Build Status](https://travis-ci.org/nexModeling/wsklimaR.svg?branch=master)](https://travis-ci.org/nexModeling/wsklimaR)
+
 wsklimaR is designed to get an easy access to stations registered by the Norwegian Meteorological Institute.
 
 The package connects you to the Klimadata webservice from met.no [wsklima](http://eklima.met.no/wsKlima/start/start_en.html).
