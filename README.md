@@ -1,5 +1,8 @@
 # wsklimaR
 
+## eklima service from met.no has shut down. Package wsklimaR becomes then obsolete
+## We are working on adapting this package to their new service
+
 [![Build Status](https://travis-ci.org/nexModeling/wsklimaR.svg?branch=master)](https://travis-ci.org/nexModeling/wsklimaR)
 
 wsklimaR is designed to get an easy access to stations registered by the Norwegian Meteorological Institute.
