@@ -1,7 +1,7 @@
 Package: wsklimaR
 Type: Package
 Version: 0.09
-Authors@R: person("Jean-Marie", "Lepioufle", ,"jm@nexmodeling.com", c("aut", "cre"))
+Authors@R: c(person("Jean-Marie", "Lepioufle", , "me@jeanmarie.eu", c("aut","cre")))
 Title: Easy access to wsklima service (open-data from met.no)
 Description: Access to the Klimadata webservice (wsklima) from met.no (http://eklima.met.no/wsKlima/start/start_en.html)
   No identification nor anything is required to connect this service.
