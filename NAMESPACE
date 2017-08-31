@@ -3,3 +3,4 @@
 export(getMetaElement)
 export(getMetaStationbyElem)
 export(getValues)
+importFrom(stats,na.omit)
