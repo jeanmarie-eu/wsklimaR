@@ -1,15 +1,18 @@
 # wsklimaR
 
-## eklima service from met.no has shut down. Package wsklimaR becomes then obsolete
-## We are working on adapting this package to their new service
+## Update: access restriction
 
-[![Build Status](https://travis-ci.org/nexModeling/wsklimaR.svg?branch=master)](https://travis-ci.org/nexModeling/wsklimaR)
+Because of security reason, the eklima service from met.no has closed the open
+[access](https://www.met.no/nyhetsarkiv/var-tjeneste-eklima-har-begrenset-tilgang)
 
+You still can use wsklimaR by contacting MET and providing your IP adress in order to get an identification.
+
+## Description
 wsklimaR is designed to get an easy access to stations registered by the Norwegian Meteorological Institute.
 
 The package connects you to the Klimadata webservice from met.no [wsklima](http://eklima.met.no/wsKlima/start/start_en.html).
 
-No identification is required to use this service.
+Send an email to MET with you IP in order to get an identification.
 
 This service is not so young. Do not send too many requests at a time.
 
