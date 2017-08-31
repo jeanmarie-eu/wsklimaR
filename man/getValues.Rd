@@ -10,13 +10,13 @@ getValues(timeserietypeID = NULL, fromPeriod = NULL, toPeriod = NULL,
 \arguments{
 \item{timeserietypeID}{0:Daily, 1:Monthly, 2:Hourly, 3:Normal Monthly, 4: Normal Daily, 5:Record Daily (not used)}
 
-\item{fromPeriod}{string of character yyyymmdd. Omitting this parameter will make it start 3 days earlier as today}
+\item{fromPeriod}{string of character yyyymmdd. Omitting this parameter will make it start 3 days earlier from now}
 
-\item{toPeriod}{string of character yyyymmdd. Omitting this parameter will make it stop today}
+\item{toPeriod}{string of character yyyymmdd. Omitting this parameter will make it stop now}
 
-\item{stations}{id of the stations. Can be a vector if multi-stations}
+\item{stations}{id of the stations. Can be a scalar or a vector of station ids}
 
-\item{elements}{meteorlogical element as its code ("TAM", "RR", ...). Can be a vector if multi-element}
+\item{elements}{meteorlogical element as its code ("TAM", "RR", ...). Can be a vector of elements}
 
 \item{missingValues}{value of the expected mssing values. By default: -999}
 }
@@ -27,7 +27,9 @@ The output is a dataframe structured as followed: the date timeserie, and the el
 }
 \description{
 The function \code{getValues()} makes it possible to get timeseries of meteorological elements at some given stations registered by met.no for a specific period of time and a specific time resolution.
-rem: timeserietypeID #2 is not always representing the hourly time resolution but also can be infra-hourly. We only kept hourly datasets.
+}
+\details{
+rem: timeserietypeID #2 is not always representing the hourly time resolution but also can be infra-hourly. We only keep hourly datasets.
 }
 \examples{
 ########################################################
@@ -78,4 +80,3 @@ str(tmp)
 head(tmp)
 }
 \keyword{wsklimaR}
-

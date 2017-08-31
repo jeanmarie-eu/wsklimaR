@@ -12,7 +12,7 @@ getMetaElement(timeserietypeID, stations = NULL)
 \item{stations}{id of the stations. Can be NULL, a scalar or a vector of station ids}
 }
 \description{
-The function \code{getMetaElement()} makes it possible to get the metadata of meteorological elements measured by met.no's stations
+The function \code{getMetaElement()} makes it possible to get the metadata of meteorological elements measured by stations registered by met.no
 }
 \details{
 The output is a dataframe. This structure eases the conversion into json
@@ -24,4 +24,3 @@ tmp <- getMetaElement(timeserietypeID="0",stations=180)
 str(tmp)
 }
 \keyword{wsklimaR}
-

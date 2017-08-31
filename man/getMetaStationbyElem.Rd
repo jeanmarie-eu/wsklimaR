@@ -24,4 +24,3 @@ tmp <- getMetaStationbyElem(timeserietypeID="0",elements=c("TAM","RR"))
 str(tmp)
 }
 \keyword{wsklimaR}
-
