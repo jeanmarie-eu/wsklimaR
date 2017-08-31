@@ -22,7 +22,7 @@ The output of each request is structured as a data.frame. It is easily usable as
 
 ```R
 # install.packages("devtools")
-devtools::install_github("nexModeling/wsklimaR")
+devtools::install_github("jeanmarie-eu/wsklimaR")
 ```
 
 ## Usage
