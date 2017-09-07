@@ -21,13 +21,32 @@ checkDateTS <- function(timeserie, timeserietypeID, fromPeriod, toPeriod, missin
                                                                           as.character(substr(timeserie$time,9,10)),sep="/"),   # day
                                                                           as.character(substr(timeserie$time,12,23)),sep=" "))  # hour
 
-     indice <- match(uncompleteTS,completeTS)
+
+     indice <- match(uncompleteTS,completeTS$seqPeriod)
+
+     cat("completeTS")
+     print(completeTS$seqPeriod)
+     cat("\n")
+     cat("UNcompleteTS")
+     print(uncompleteTS)
+     cat("\n")
+     cat("indice")
+     print(indice)
+     cat("\n")
 
      df <- data.frame(
             date = completeTS$seqPeriod,
             value = rep(missingValues,completeTS$nb))
 
-     df$value[indice] <- timeserie[,2]
+
+     if (length(is.na(indice)) && length(!is.na(indice))) {
+       df$value[indice[!is.na(indice)]] <- timeserie[,2]
+     } else if (length(!is.na(indice))) {
+       {df$value <- timeserie[,2]}
+     } else {
+       NULL
+     }
+
 
   }
   else{
@@ -47,6 +66,5 @@ checkDateTS <- function(timeserie, timeserietypeID, fromPeriod, toPeriod, missin
      "3" = timeManip::timeserie(timeResolution="monthly",fromPeriod=paste0("1961","01"),toPeriod=paste0("1961","12")),
      "4" = timeManip::timeserie(timeResolution="daily",fromPeriod=paste0("1961","01","01"),toPeriod=paste0("1961","12","01")),
      stop("timeserietypeID not recognize: ",timeserietypeID))
-     print(res)
    return(res)
  }
