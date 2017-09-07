@@ -24,16 +24,6 @@ checkDateTS <- function(timeserie, timeserietypeID, fromPeriod, toPeriod, missin
 
      indice <- match(uncompleteTS,completeTS$seqPeriod)
 
-     cat("completeTS")
-     print(completeTS$seqPeriod)
-     cat("\n")
-     cat("UNcompleteTS")
-     print(uncompleteTS)
-     cat("\n")
-     cat("indice")
-     print(indice)
-     cat("\n")
-
      df <- data.frame(
             date = completeTS$seqPeriod,
             value = rep(missingValues,completeTS$nb))
