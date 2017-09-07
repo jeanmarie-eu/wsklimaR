@@ -51,10 +51,36 @@ getVByMonth <- function(timeserietypeID,fromPeriod,toPeriod,stations,elements) {
   toMonth <- substring(toPeriod, 5, 6)
   toDay <- substring(toPeriod, 7, 8)
 
+  tmp <- timeManip::timeserie(timeResolution="monthly",
+                              fromPeriod    = substring(fromPeriod, 1, 8),
+                              toPeriod      = substring(toPeriod, 1, 8),
+                              precision     = "daily")
+
+  if(tmp$nb) {
+    tmp$seqPeriod[tmp$nb] <- timeManip::standard(precision="daily",date_chr=substring(toPeriod, 1, 8))
+  }
+  tmp$seqPeriod[tmp$nb] <- timeManip::addition_nonsec(date=tmp$seqPeriod[tmp$nb],timeResolution="daily",v=35)
+
+
+  # result is a data.frame
+	df<-NULL
+	for (i in 1:(nbMonth)) {
+       tmp <- getV(timeserietypeID=timeserietypeID,fromPeriod=timeManip::YYYYmmdd(tmp$seqPeriod[i]),toPeriod=tperiod[i],stations=stations,elements=elements)
+		   if (!is.null(tmp)) {
+         df <- rbind(df,tmp)
+       }
+	}
+
+	return(df)
+
+
+
 	rangetime <- range(((strptime(fromPeriod,"%Y%m%d",tz="GMT"))),((strptime(toPeriod,"%Y%m%d",tz="GMT"))))
 	tmp <- zoo::zoo(,(zoo::as.Date(seq(from =rangetime[1], to =rangetime[2], by = "month"))+1))
 	seqPeriod <- attributes(tmp)$index
 	nbMonth <- length(seqPeriod)
+
+
 
 	fperiod<-as.character(zoo::as.Date(zoo::as.yearmon(seqPeriod) ))
 	substr(fperiod[1], 9, 10) <- fromDay
