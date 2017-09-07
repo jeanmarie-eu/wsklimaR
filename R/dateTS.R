@@ -1,7 +1,7 @@
 # Get the full date timeserie between the range of the period and at the right time resolution
 
 getDateTS <- function (fromPeriod,toPeriod,timeserietypeID){
-   res <- completeDateTS(fromPeriod=,toPeriod=toPeriod,timeserietypeID=timeserietypeID)
+   res <- completeDateTS(fromPeriod=fromPeriod,toPeriod=toPeriod,timeserietypeID=timeserietypeID)
    return(res$seqPeriod)
 }
 
