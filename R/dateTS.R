@@ -44,8 +44,9 @@ checkDateTS <- function(timeserie, timeserietypeID, fromPeriod, toPeriod, missin
      "0" = timeManip::timeserie(timeResolution="daily",fromPeriod=fromPeriod,toPeriod=toPeriod),
      "1" = timeManip::timeserie(timeResolution="monthly",fromPeriod=fromPeriod,toPeriod=toPeriod),
      "2" = timeManip::timeserie(timeResolution="hourly",fromPeriod=fromPeriod,toPeriod=toPeriod),
-     "3" = timeManip::timeserie(timeResolution="monthly",fromPeriod=paste0("1961","01"),toPeriod=paste0("1961","12"),
-     "4" = timeManip::timeserie(timeResolution="daily",fromPeriod=paste0("1961","01","01"),toPeriod=paste0("1961","12","01"),
+     "3" = timeManip::timeserie(timeResolution="monthly",fromPeriod=paste0("1961","01"),toPeriod=paste0("1961","12")),
+     "4" = timeManip::timeserie(timeResolution="daily",fromPeriod=paste0("1961","01","01"),toPeriod=paste0("1961","12","01")),
      stop("timeserietypeID not recognize: ",timeserietypeID))
+     print(res)
    return(res)
  }
