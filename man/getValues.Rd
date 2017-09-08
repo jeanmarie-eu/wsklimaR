@@ -49,8 +49,8 @@ head(tmp)
 # and 2650 between 27/12/2015 and 31/12/2015           #
 ########################################################
 tmp <- getValues(timeserietypeID="2",
-                 fromPeriod="20151227",
-                 toPeriod="20151231",
+                 fromPeriod="2015122700",
+                 toPeriod="2015123100",
                  stations=c("19710","2650"),
                  elements=c("TA"))
 str(tmp)
@@ -62,8 +62,8 @@ head(tmp)
 # 31/12/2015                                           #
 ########################################################
 tmp <- getValues(timeserietypeID="1",
-                 fromPeriod="20140316",
-                 toPeriod="20151231",
+                 fromPeriod="201403",
+                 toPeriod="201512",
                  stations=c("19710","180"),
                  elements=c("TAM","RR"))
 str(tmp)

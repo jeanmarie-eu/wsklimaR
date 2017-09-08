@@ -1,156 +1,60 @@
 # Get the full date timeserie between the range of the period and at the right time resolution
+
 getDateTS <- function (fromPeriod,toPeriod,timeserietypeID){
-   fromYear <- substring(fromPeriod, 1, 4)
-   fromMonth <- substring(fromPeriod, 5, 6)
-   fromDay <- substring(fromPeriod, 7, 8)
-   toYear <- substring(toPeriod, 1, 4)
-   toMonth <- substring(toPeriod, 5, 6)
-   toDay <- substring(toPeriod, 7, 8)
+   res <- completeDateTS(fromPeriod=fromPeriod,toPeriod=toPeriod,timeserietypeID=timeserietypeID)
+   return(res$seqPeriod)
+}
 
-   if ((timeserietypeID=="0")) {
-     # Daily
-     rangeDate <- range(((strptime(fromPeriod,"%Y%m%d",tz="GMT"))),((strptime(toPeriod,"%Y%m%d",tz="GMT"))))
-     dateTs <- zoo::zoo(,(as.Date(seq(from =rangeDate[1], to =rangeDate[2], by = "day"))))
-
-   } else if ((timeserietypeID=="1")) {
-     # Monthly
-     rangeDate <- range(((strptime(paste(fromYear,fromMonth,"01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste(toYear,toMonth,"01",sep=""),"%Y%m%d",tz="GMT"))))
-     dateTs <- zoo::zoo(,(as.Date(seq(from =rangeDate[1], to =rangeDate[2], by = "month"))))
-
-   } else if ((timeserietypeID=="2")) {
-     # Hourly
-     rangeDate <- range(((strptime(paste(fromPeriod,"000000",sep=""),"%Y%m%d%H%M%S",tz="GMT"))),((strptime(paste(toPeriod,"230000",sep=""),"%Y%m%d%H%M%S",tz="GMT"))))
-     dateTs <- zoo::zoo(,(seq(from =rangeDate[1], to =rangeDate[2], by = "hour")))
-     attributes(dateTs)$index <- as.POSIXct(attributes(dateTs)$index)
-
-   } else if ((timeserietypeID=="3"))  {
-     # Normal Monthly: 1961-1990
-     rangeDate <- range(((strptime(paste("1961","01","01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste("1961","12","01",sep=""),"%Y%m%d",tz="GMT"))))
-     dateTs <- zoo::zoo(,(as.Date(seq(from =rangeDate[1], to =rangeDate[2], by = "month"))))
-
-   } else if ((timeserietypeID=="4"))  {
-     # Normal Daily:1961-1990
-     # Warning: the 29ths of February are not kept
-     rangeDate <- range(((strptime(paste("1961","01","01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste("1961","12","31",sep=""),"%Y%m%d",tz="GMT"))))
-     dateTs <- zoo::zoo(,(as.Date(seq(from =rangeDate[1], to =rangeDate[2], by = "day"))))
-   }
-   res <- attributes(dateTs)$index
-   return(res)
- }
 
 # Check the data timeseries and fill-in by missing values
 # In case of missing dates, the date timeserie will get filled-in, and a missing value will be added as a value of the element
 checkDateTS <- function(timeserie, timeserietypeID, fromPeriod, toPeriod, missingValues) {
 
- fromYear  <- substring(fromPeriod, 1, 4)
- fromMonth <- substring(fromPeriod, 5, 6)
- fromDay   <- substring(fromPeriod, 7, 8)
- toYear    <- substring(toPeriod, 1, 4)
- toMonth   <- substring(toPeriod, 5, 6)
- toDay     <- substring(toPeriod, 7, 8)
+  # build a complete date timeserie
+  completeTS <- completeDateTS(fromPeriod=fromPeriod,toPeriod=toPeriod,timeserietypeID=timeserietypeID)
 
- if (!is.null(timeserie)) {
 
-   ts <- data.frame(
-      year = as.character(substr(timeserie$time,1,4)),
-      month = as.character(substr(timeserie$time,6,7)),
-      day = as.character(substr(timeserie$time,9,10)),
-      hour = as.character(substr(timeserie$time,12,23)),
-      value = timeserie[,2]
-   )
+  # build a POSIXlt vector of from the data
+  if (!is.null(timeserie)) {
+     uncompleteTS <- timeManip::standard2(precision="hourly", paste(paste(as.character(substr(timeserie$time,1,4)),             # year
+                                                                          as.character(substr(timeserie$time,6,7)),             # month
+                                                                          as.character(substr(timeserie$time,9,10)),sep="/"),   # day
+                                                                          as.character(substr(timeserie$time,12,23)),sep=" "))  # hour
 
-   if ((timeserietypeID=="0")) {
-         # Daily
-         ts.date<-strptime(paste(ts$day,ts$month,ts$year,sep="."),"%d.%m.%Y",tz="GMT")
-         ts2<-zoo::zoo(ts[,5:dim(ts)[2]], as.Date(ts.date))
-         ts2.rangetime2 <- range(((strptime(fromPeriod,"%Y%m%d",tz="GMT"))),((strptime(toPeriod,"%Y%m%d",tz="GMT"))))
-         ts2.entire_date <- zoo::zoo(,(as.Date(seq(from =ts2.rangetime2[1], to =ts2.rangetime2[2], by = "day"))))
-         ts3<-merge(x=ts2, y=ts2.entire_date)
-         ts3[is.na(ts3)]<-missingValues
 
-   } else if ((timeserietypeID=="1")) {
-         # Monthly
-         ts.date<-strptime(paste("01",ts$month,ts$year,sep="."),"%d.%m.%Y",tz="GMT")
-         ts2<-zoo::zoo(ts[,5:dim(ts)[2]], as.Date(ts.date))
-         ts2.rangetime2 <- range(((strptime(paste(fromYear,fromMonth,"01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste(toYear,toMonth,"01",sep=""),"%Y%m%d",tz="GMT"))))
-         ts2.entire_date <- zoo::zoo(,(as.Date(seq(from =ts2.rangetime2[1], to =ts2.rangetime2[2], by = "month"))))
-         ts3<-merge(x=ts2, y=ts2.entire_date)
-         ts3[is.na(ts3)]<-missingValues
+     indice <- match(uncompleteTS,completeTS$seqPeriod)
 
-   } else if ((timeserietypeID=="2")) {
-       # Hourly
-       ts.date<-strptime(paste(ts$year,ts$month,ts$day,ts$hour,sep=""),"%Y%m%d%H:%M:%S",tz="GMT")
-       ts2<-zoo::zoo(ts[,5:dim(ts)[2]], ts.date)
-       ts2.rangetime2 <- range(((strptime(paste(fromPeriod,"000000",sep=""),"%Y%m%d%H%M%S",tz="GMT"))),((strptime(paste(toPeriod,"230000",sep=""),"%Y%m%d%H%M%S",tz="GMT"))))
-       ts2.entire_date <- zoo::zoo(,(seq(from =ts2.rangetime2[1], to =ts2.rangetime2[2], by = "hour")))
+     df <- data.frame(
+            date = completeTS$seqPeriod,
+            value = rep(missingValues,completeTS$nb))
 
-       attributes(ts2.entire_date)$index <- as.POSIXct(attributes(ts2.entire_date)$index,tz="GMT")
-       attributes(ts2)$index <- as.POSIXct(attributes(ts2)$index,tz="GMT")
 
-       ts3<-merge(x=ts2, y=ts2.entire_date)
-       ts3[is.na(ts3)]<-missingValues
-       attributes(ts3)$index <- as.POSIXct(attributes(ts3)$index,tz="GMT")
+     if (length(is.na(indice)) && length(!is.na(indice))) {
+       df$value[indice[!is.na(indice)]] <- timeserie[,2]
+     } else if (length(!is.na(indice))) {
+       {df$value <- timeserie[,2]}
+     } else {
+       NULL
+     }
 
-   } else if ((timeserietypeID=="3"))  {
-         # Normal Monthly: 1961-1990
-         ts.date<-strptime(paste("01",ts$month,ts$year,sep="."),"%d.%m.%Y",tz="GMT")
-         #rem: ts.date[13]: yearly normal
-         ts.date <- ts.date[-13]
-         ts2<-zoo::zoo(ts[,5:dim(ts)[2]], as.Date(ts.date))
-         ts2.rangetime2 <- range(((strptime(paste("1961","01","01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste("1961","12","01",sep=""),"%Y%m%d",tz="GMT"))))
-         ts2.entire_date <- zoo::zoo(,(as.Date(seq(from =ts2.rangetime2[1], to =ts2.rangetime2[2], by = "month"))))
-         ts3<-merge(x=ts2, y=ts2.entire_date)
-         ts3[is.na(ts3)]<-missingValues
 
-   } else if ((timeserietypeID=="4"))  {
-         # Normal Daily:1961-1990
-         ts.date<-strptime(paste(ts$day,ts$month,ts$year,sep="."),"%d.%m.%Y",tz="GMT")
-         # Warning: 29th of February is not kept
-         ts.date <- ts.date[-60]
-         ts2<-zoo::zoo(ts[,5:dim(ts)[2]], as.Date(ts.date))
-         ts2.rangetime2 <- range(((strptime(paste("1961","01","01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste("1961","12","31",sep=""),"%Y%m%d",tz="GMT"))))
-         ts2.entire_date <- zoo::zoo(,(as.Date(seq(from =ts2.rangetime2[1], to =ts2.rangetime2[2], by = "day"))))
-         ts3<-merge(x=ts2, y=ts2.entire_date)
-         ts3[is.na(ts3)]<-missingValues
-   }
-
-   df <- data.frame(
-          date = attributes(ts3)$index,
-         value = as.numeric(ts3[,2])
-   )
-
- } else {
-   if ((timeserietypeID=="0")) {
-         # Daily
-         ts2.rangetime2 <- range(((strptime(fromPeriod,"%Y%m%d",tz="GMT"))),((strptime(toPeriod,"%Y%m%d",tz="GMT"))))
-         ts2.entire_date <- zoo::zoo(,(as.Date(seq(from =ts2.rangetime2[1], to =ts2.rangetime2[2], by = "day"))))
-
-   } else if ((timeserietypeID=="1")) {
-         # Monthly
-         ts2.rangetime2 <- range(((strptime(paste(fromYear,fromMonth,fromDay,sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste(toYear,toMonth,toDay,sep=""),"%Y%m%d",tz="GMT"))))
-         ts2.entire_date <- zoo::zoo(,(as.Date(seq(from =ts2.rangetime2[1], to =ts2.rangetime2[2], by = "month"))))
-
-   } else if ((timeserietypeID=="2")) {
-         # Hourly
-         ts2.rangetime2 <- range(((strptime(paste(fromPeriod,"000000",sep=""),"%Y%m%d%H%M%S",tz="GMT"))),((strptime(paste(toPeriod,"235959",sep=""),"%Y%m%d%H%M%S",tz="GMT"))))
-         ts2.entire_date <- zoo::zoo(,(seq(from =ts2.rangetime2[1], to =ts2.rangetime2[2], by = "hour")))
-
-   } else if ((timeserietypeID=="3"))  {
-         # Normal Monthly: 1961-1990
-         ts2.rangetime2 <- range(((strptime(paste("1961","01","01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste("1961","12","01",sep=""),"%Y%m%d",tz="GMT"))))
-         ts2.entire_date <- zoo::zoo(,(as.Date(seq(from =ts2.rangetime2[1], to =ts2.rangetime2[2], by = "month"))))
-
-   } else if ((timeserietypeID=="4"))  {
-         # Normal Daily:1961-1990
-         # Warning: 29th of February are not kept
-         ts2.rangetime2 <- range(((strptime(paste("1961","01","01",sep=""),"%Y%m%d",tz="GMT"))),((strptime(paste("1961","12","31",sep=""),"%Y%m%d",tz="GMT"))))
-         ts2.entire_date <- zoo::zoo(,(as.Date(seq(from =ts2.rangetime2[1], to =ts2.rangetime2[2], by = "day"))))
-   }
-
-   df <- data.frame(
-          date = attributes(ts2.entire_date)$index,
-          value = rep(missingValues,length(attributes(ts2.entire_date)$index))
-    )
   }
+  else{
+    df <- data.frame(
+           date = completeTS$seqPeriod,
+           value = rep(missingValues,completeTS$nb))
+  }
+
    return(df)
+ }
+
+ completeDateTS <- function(fromPeriod,toPeriod,timeserietypeID){
+   res <- switch(timeserietypeID,
+     "0" = timeManip::timeserie(timeResolution="daily",fromPeriod=fromPeriod,toPeriod=toPeriod),
+     "1" = timeManip::timeserie(timeResolution="monthly",fromPeriod=fromPeriod,toPeriod=toPeriod),
+     "2" = timeManip::timeserie(timeResolution="hourly",fromPeriod=fromPeriod,toPeriod=toPeriod),
+     "3" = timeManip::timeserie(timeResolution="monthly",fromPeriod=paste0("1961","01"),toPeriod=paste0("1961","12")),
+     "4" = timeManip::timeserie(timeResolution="daily",fromPeriod=paste0("1961","01","01"),toPeriod=paste0("1961","12","01")),
+     stop("timeserietypeID not recognize: ",timeserietypeID))
+   return(res)
  }

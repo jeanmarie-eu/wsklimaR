@@ -1,19 +1,22 @@
 Package: wsklimaR
 Type: Package
-Version: 0.09
+Version: 0.099
 Authors@R: c(person("Jean-Marie", "Lepioufle", , "me@jeanmarie.eu", c("aut","cre")))
 Title: Easy access to wsklima service (open-data from met.no)
 Description: Access to the Klimadata webservice (wsklima) from met.no (http://eklima.met.no/wsKlima/start/start_en.html)
-  No identification nor anything is required to connect this service.
+  Registration of your IP is required to connect to this service.
   This service is not very young. Do not send too many requests at a time.
   It is being replaced by a much more robust service METAPI.
 Depends: R (>= 3.2.0)
 Imports:
   XML,
-  zoo
+  zoo,
+  timeManip
+Remotes:
+  jeanmarie-eu/timeManip
 License: GPL-3
-URL: https://github.com/nexmodeling/wsklimaR
-BugReports: https://github.com/nexmodeling/wsklimaR/issues
+URL: https://github.com/jeanmarie-eu/wsklimaR
+BugReports: https://github.com/jeanmarie-eu/wsklimaR/issues
 Encoding: UTF-8
 LazyData: false
 RoxygenNote: 6.0.1
